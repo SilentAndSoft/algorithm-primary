@@ -6,13 +6,19 @@ public class Code03_BitAddMinusMultiDiv {
 	public static int add(int a, int b) {
 		int sum = a;
 		while (b != 0) {
+			//a和b无进位相加信息
 			sum = a ^ b;
+			//b -> a和b进位信息
 			b = (a & b) << 1;
+			//a -> a和b无进位相加信息
 			a = sum;
 		}
 		return sum;
 	}
 
+	/**
+	 * 求n的负数
+	 **/
 	public static int negNum(int n) {
 		return add(~n, 1);
 	}

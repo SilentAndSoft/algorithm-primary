@@ -20,10 +20,10 @@ public class ShowComparator {
 
 	// 谁id大，谁放前！
 	public static class IdComparator implements Comparator<Student> {
-
+		// 所有compare方法
 		// 如果返回负数，认为第一个参数应该排在前面
 		// 如果返回正数，认为第二个参数应该排在前面
-		// 如果返回0，认为谁放前面无所谓
+		// 如果返回0，认为谁放前面无所谓，两者相等
 		@Override
 		public int compare(Student o1, Student o2) {
 			if (o1.id < o2.id) {
@@ -35,13 +35,13 @@ public class ShowComparator {
 			}
 		}
 	}
-	
+
 	// 谁age大，谁放前！
 	public static class AgeComparator implements Comparator<Student> {
-
+		// 所有compare方法只认正负数
 		// 如果返回负数，认为第一个参数应该排在前面
 		// 如果返回正数，认为第二个参数应该排在前面
-		// 如果返回0，认为谁放前面无所谓
+		// 如果返回0，认为谁放前面无所谓，两者相等
 		@Override
 		public int compare(Student o1, Student o2) {
 			if (o1.age < o2.age) {

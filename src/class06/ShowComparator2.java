@@ -6,7 +6,6 @@ import java.util.PriorityQueue;
 public class ShowComparator2 {
 
 	public static class MyComparator implements Comparator<Integer> {
-
 		// 负，第一个参数在前
 		// 正，第二个参数在前
 		// 0, 谁放前都行
@@ -20,7 +19,6 @@ public class ShowComparator2 {
 				return 0;
 			}
 		}
-
 	}
 
 	public static class Student {
@@ -56,7 +54,9 @@ public class ShowComparator2 {
 	public static void main(String[] args) {
 		String str1 = "abc";
 		String str2 = "b";
+		//字符串的排序是字典序
 		System.out.println(str1.compareTo(str2));
+		// 优先级队列，默认内部是小根堆，最小值在堆顶
 		PriorityQueue<Student> heap = new PriorityQueue<>(new IdComparator());
 		Student s1 = new Student("张三", 5, 27);
 		Student s2 = new Student("李四", 1, 17);

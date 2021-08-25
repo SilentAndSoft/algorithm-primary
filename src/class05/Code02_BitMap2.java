@@ -6,10 +6,10 @@ public class Code02_BitMap2 {
 
 	// 这个类的实现是正确的
 	public static class BitMap {
-
 		private long[] bits;
 
 		public BitMap(int max) {
+			//需要多少个long类型的整数
 			bits = new long[(max + 64) >> 6];
 		}
 
