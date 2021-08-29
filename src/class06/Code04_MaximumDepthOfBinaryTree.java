@@ -2,7 +2,7 @@ package class06;
 
 /**
  * 返回一棵树的最大高度
- * 测试链接：https://leetcode.com/problems/maximum-depth-of-binary-tree
+ * 测试链接：https://leetcode-cn.com/problems/maximum-depth-of-binary-tree
  **/
 public class Code04_MaximumDepthOfBinaryTree {
 
