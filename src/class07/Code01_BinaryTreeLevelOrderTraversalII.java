@@ -6,7 +6,7 @@ import java.util.Queue;
 
 /**
  * 给定一个二叉树，返回其节点值自底向上的层序遍历
- * 测试链接：https://leetcode.com/problems/binary-tree-level-order-traversal-ii
+ * 测试链接：https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii
  **/
 public class Code01_BinaryTreeLevelOrderTraversalII {
 
@@ -31,16 +31,17 @@ public class Code01_BinaryTreeLevelOrderTraversalII {
         while (!queue.isEmpty()) {
             //收集每层有几个节点，即收集节点的次数
             int size = queue.size();
+            //收集当前这一层的节点
             List<Integer> curAns = new LinkedList<>();
             for (int i = 0; i < size; i++) {
                 //当前节点出队的同时，子节点入队
                 TreeNode curNode = queue.poll();
                 curAns.add(curNode.val);
-                //节点有左先加左
+                //节点有左子节点先加左子节点
                 if (curNode.left != null) {
                     queue.add(curNode.left);
                 }
-                //节点有右先再加右
+                //节点有右子节点先再加右子节点
                 if (curNode.right != null) {
                     queue.add(curNode.right);
                 }

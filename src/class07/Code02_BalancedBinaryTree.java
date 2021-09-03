@@ -2,7 +2,7 @@ package class07;
 
 /**
  * 判断是否为平衡二叉树
- * https://leetcode.com/problems/balanced-binary-tree
+ * https://leetcode-cn.com/problems/balanced-binary-tree
  **/
 public class Code02_BalancedBinaryTree {
 
@@ -18,20 +18,6 @@ public class Code02_BalancedBinaryTree {
 
     public static boolean isBalanced(TreeNode root) {
         return process(root).isBalanced;
-    }
-
-    /**
-     * 以某节点为头的树
-     * 是否平衡，整棵树的高度
-     **/
-    public static class Info {
-        public boolean isBalanced;
-        public int height;
-
-        public Info(boolean i, int h) {
-            isBalanced = i;
-            height = h;
-        }
     }
 
     /**
@@ -55,4 +41,18 @@ public class Code02_BalancedBinaryTree {
         return new Info(isBalanced, height);
     }
 
+
+    /**
+     * 以某节点为头的树
+     * 是否平衡，整棵树的高度
+     **/
+    public static class Info {
+        public boolean isBalanced;
+        public int height;
+
+        public Info(boolean i, int h) {
+            isBalanced = i;
+            height = h;
+        }
+    }
 }

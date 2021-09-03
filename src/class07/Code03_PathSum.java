@@ -2,7 +2,7 @@ package class07;
 
 /**
  * 判断是否存在路径总和
- * 测试链接：https://leetcode.com/problems/path-sum
+ * 测试链接：https://leetcode-cn.com/problems/path-sum
  **/
 public class Code03_PathSum {
 
@@ -41,7 +41,7 @@ public class Code03_PathSum {
             }
             return;
         }
-        // x是非叶节点
+        // 累加非叶节点的值
         preSum += x.val;
         if (x.left != null) {
             process(x.left, preSum, sum);

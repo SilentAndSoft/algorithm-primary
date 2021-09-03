@@ -7,7 +7,7 @@ import java.util.List;
  * 给你二叉树的根节点 root 和一个整数目标和 targetSum ，找出所有 从根节点到叶子节点 路径总和等于给定目标和的路径。
  * 叶子节点 是指没有子节点的节点。
  * <p>
- * https://leetcode.com/problems/path-sum-ii
+ * https://leetcode-cn.com/problems/path-sum-ii
  **/
 public class Code04_PathSumII {
 
@@ -32,8 +32,9 @@ public class Code04_PathSumII {
     }
 
     /**
-     * @param path   前面的路径
-     * @param preSum 前面的路径和
+     * @param x      当前节点
+     * @param path   当前节点前面的路径
+     * @param preSum 当前节点前面的路径和
      * @param sum    目标路径和
      * @param ans    所有符合条件的路径集合
      **/
@@ -44,7 +45,7 @@ public class Code04_PathSumII {
                 //题目关注的是所有的叶节点，如果不是叶节点，直接略过，直到叶节点并且遇到凑出目标路径和，将全局变量改成true
                 path.add(x.val);
                 //拷贝这次的路径，进结果集
-                ans.add(copy(path));
+                ans.add(new ArrayList<>(path));
                 //把当前的叶节点清理掉，因为即将返回走右树
                 path.remove(path.size() - 1);
             }
@@ -61,16 +62,12 @@ public class Code04_PathSumII {
         if (x.right != null) {
             process(x.right, path, preSum, sum, ans);
         }
-        //把当前的叶节点清理掉
+        //把当前节点清理掉
         path.remove(path.size() - 1);
     }
 
     public static List<Integer> copy(List<Integer> path) {
-        List<Integer> ans = new ArrayList<>();
-        for (Integer num : path) {
-            ans.add(num);
-        }
-        return ans;
+        return new ArrayList<>(path);
     }
 
 }

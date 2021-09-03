@@ -37,18 +37,18 @@ public class Code05_IsBinarySearchTree {
     /**
      * 解法1
      **/
-    public static Info process1(TreeNode x) {
+    public static Info process1(TreeNode root) {
         //
-        if (x == null) {
+        if (root == null) {
             return null;
         }
         //左树的信息
-        Info leftInfo = process1(x.left);
+        Info leftInfo = process1(root.left);
         //右树的信息
-        Info rightInfo = process1(x.right);
+        Info rightInfo = process1(root.right);
 
-        int max = x.val;
-        int min = x.val;
+        int max = root.val;
+        int min = root.val;
         if (leftInfo != null) {
             //收集左树的最值
             max = Math.max(leftInfo.max, max);
@@ -59,7 +59,6 @@ public class Code05_IsBinarySearchTree {
             max = Math.max(rightInfo.max, max);
             min = Math.min(rightInfo.min, min);
         }
-
         boolean isBST = true;
         //收集左树是否是BST
         if (leftInfo != null && !leftInfo.isBST) {
@@ -69,26 +68,25 @@ public class Code05_IsBinarySearchTree {
         if (rightInfo != null && !rightInfo.isBST) {
             isBST = false;
         }
-
-        //左树为空 || 左树的值与root的值比较
-        boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val);
-        //右树为空 || 右树的值与root的值比较
-        boolean rightMinMoreX = rightInfo == null ? true : (rightInfo.min > x.val);
-        //非BST的条件（左树大于root || 右树小于root）
+        //左树最大值是否小于root
+        boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < root.val);
+        //右树最小值是否大于root
+        boolean rightMinMoreX = rightInfo == null ? true : (rightInfo.min > root.val);
+        //左树最大值大于root || 右树最小值小于root，说明不是BST
         if (!(leftMaxLessX && rightMinMoreX)) {
             isBST = false;
         }
         return new Info(isBST, max, min);
     }
 
-    public static Info process2(TreeNode x) {
-        if (x == null) {
+    public static Info process2(TreeNode root) {
+        if (root == null) {
             return null;
         }
-        Info leftInfo = process2(x.left);
-        Info rightInfo = process2(x.right);
-        int max = x.val;
-        int min = x.val;
+        Info leftInfo = process2(root.left);
+        Info rightInfo = process2(root.right);
+        int max = root.val;
+        int min = root.val;
         if (leftInfo != null) {
             max = Math.max(leftInfo.max, max);
             min = Math.min(leftInfo.min, min);
@@ -100,12 +98,12 @@ public class Code05_IsBinarySearchTree {
         boolean isBST = false;
         boolean leftIsBst = leftInfo == null ? true : leftInfo.isBST;
         boolean rightIsBst = rightInfo == null ? true : rightInfo.isBST;
-        boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < x.val);
-        boolean rightMinMoreX = rightInfo == null ? true : (rightInfo.min > x.val);
+        boolean leftMaxLessX = leftInfo == null ? true : (leftInfo.max < root.val);
+        boolean rightMinMoreX = rightInfo == null ? true : (rightInfo.min > root.val);
+        //同时满足左树是BST、右树是BST、左树最大值小于root、右树最小值大于root
         if (leftIsBst && rightIsBst && leftMaxLessX && rightMinMoreX) {
             isBST = true;
         }
         return new Info(isBST, max, min);
     }
-
 }
