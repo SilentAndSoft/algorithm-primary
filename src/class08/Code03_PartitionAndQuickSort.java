@@ -2,64 +2,107 @@ package class08;
 
 import java.util.Stack;
 
+/**
+ * 快速排序
+ **/
 public class Code03_PartitionAndQuickSort {
 
+    /**
+     * 用数组最后一个值P为基准，小于等于P的值集中到左区域，大于P的值集中到右区域，而且P是“小于等于”区域的最后一个数
+     * 要求O(N)
+     * 32144)7687
+     * 思路：
+     * 当前数<=P，当前数和“小于等于”区域的下一个数交换，“小于等于”区域向右扩一个位置，当前数跳到下一个
+     * 当前数>P，当前数跳到下一个
+     **/
     public static void splitNum1(int[] arr) {
+        //“小于等于”区域的起始边界
         int lessEqualR = -1;
-        int index = 0;
+        //当前下标
+        int cur = 0;
         int N = arr.length;
-        while (index < N) {
-            if (arr[index] <= arr[N - 1]) {
-                swap(arr, ++lessEqualR, index++);
+        while (cur < N) {
+            if (arr[cur] <= arr[N - 1]) {
+//                //当前数和“小于等于”区域的下一个数交换
+//                swap(arr, lessEqualR+1,cur);
+//                //“小于等于”区域向右扩一个位置
+//                lessEqualR++;
+//                //当前数跳到下一个
+//                cur++;
+
+                //简化成下面一行
+                swap(arr, ++lessEqualR, cur++);
             } else {
-                index++;
+                cur++;
             }
         }
     }
 
+    /**
+     * 用数组最后一个值P为基准，小于P的值集中到左区域，等于P的数集中到中间区域，大于P的值集中到右区域
+     * 2323)444(8679
+     * 思路：
+     * 右区域先固定在N-1的位置，把P隔离开
+     * 当前数<P，当前数和“小于”区域的下一个数交换，“小于”区域向右扩一个位置，当前数跳到下一个
+     * 当前数>P，当前数和“大于”区域的前一个数交换，“大于”区域往左扩一个位置，当前数不动
+     * 当前数==P，当前数直接跳下一个
+     * 当前数撞上“大于”区域的左边界，“大于”区域的第一个数和P交换
+     **/
     public static void splitNum2(int[] arr) {
         int N = arr.length;
+        //小于区域的起始边界
         int lessR = -1;
+        //大于区域的边界在N-1
         int moreL = N - 1;
-        int index = 0;
-        // arr[N-1]
-        while (index < moreL) {
-            if (arr[index] < arr[N - 1]) {
-                swap(arr, ++lessR, index++);
-            } else if (arr[index] > arr[N - 1]) {
-                swap(arr, --moreL, index);
-            } else {
-                index++;
+        int cur = 0;
+        while (cur < moreL) {
+            //当前数<P
+            if (arr[cur] < arr[N - 1]) {
+                swap(arr, ++lessR, cur++);
+            }
+            //当前数>P
+            else if (arr[cur] > arr[N - 1]) {
+                swap(arr, --moreL, cur);
+            }
+            //当前数=P
+            else {
+                cur++;
             }
         }
+        //当前数来到“大于”区域的左边界
         swap(arr, moreL, N - 1);
     }
 
-    public static void swap(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
-    }
-
-    // arr[L...R]范围上，拿arr[R]做划分值，
-    // L....R < = >
+    /**
+     * arr[L...R]范围上，拿arr[R]做划分值
+     * L~R范围上，小于P的放左，等于的放中间，大于的放右
+     * 返回等于区域的左边界和右边界两个数组成的数组 [eqLeft, eqRight]
+     * 参考 splitNum2 方法
+     */
     public static int[] partition(int[] arr, int L, int R) {
+        //小于区域的右边界
         int lessR = L - 1;
+        //大于区域的左边界
         int moreL = R;
-        int index = L;
-        while (index < moreL) {
-            if (arr[index] < arr[R]) {
-                swap(arr, ++lessR, index++);
-            } else if (arr[index] > arr[R]) {
-                swap(arr, --moreL, index);
+        int cur = L;
+        while (cur < moreL) {
+            if (arr[cur] < arr[R]) {
+                swap(arr, ++lessR, cur++);
+            } else if (arr[cur] > arr[R]) {
+                swap(arr, --moreL, cur);
             } else {
-                index++;
+                cur++;
             }
         }
         swap(arr, moreL, R);
+        //等于区域的左边界是lessR+1
+        //右边界是moreL，因为最后一步划分至值和大于区域的第一个做交换了
         return new int[]{lessR + 1, moreL};
     }
 
+    /**
+     * 快速排序 递归
+     **/
     public static void quickSort1(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
@@ -71,21 +114,18 @@ public class Code03_PartitionAndQuickSort {
         if (L >= R) {
             return;
         }
+        //等于区域的左右边界
         int[] equalE = partition(arr, L, R);
+        //小于区域：L~等于区域左边界-1
         process(arr, L, equalE[0] - 1);
+        //大于区域：等于区域右边界+1~R
         process(arr, equalE[1] + 1, R);
     }
 
-    public static class Job {
-        public int L;
-        public int R;
 
-        public Job(int left, int right) {
-            L = left;
-            R = right;
-        }
-    }
-
+    /**
+     * 快速排序 非递归
+     **/
     public static void quickSort2(int[] arr) {
         if (arr == null || arr.length < 2) {
             return;
@@ -101,6 +141,16 @@ public class Code03_PartitionAndQuickSort {
             if (equals[1] < cur.R) { // 有 > 区域
                 stack.push(new Job(equals[1] + 1, cur.R));
             }
+        }
+    }
+
+    public static class Job {
+        public int L;
+        public int R;
+
+        public Job(int left, int right) {
+            L = left;
+            R = right;
         }
     }
 
@@ -151,6 +201,12 @@ public class Code03_PartitionAndQuickSort {
             arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
         }
         return arr;
+    }
+
+    public static void swap(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
     }
 
     // for test
